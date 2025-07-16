@@ -94,7 +94,7 @@ const remedies = [
 
 async function seed() {
   await mongoose.connect(
-    process.env.MONGODB_URI || "mongodb://localhost:27017/papa-web2"
+    "mongodb+srv://dhruvvayugundla:DDD123ddd@cluster1.j4w98fr.mongodb.net/"
   );
   await Product.deleteMany({});
   await Remedy.deleteMany({});

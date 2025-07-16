@@ -8,13 +8,15 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 
 interface Remedy {
   _id: string;
-  name: string;
-  price: number;
-  description: string;
-  dosage: string;
-  sideEffects: string[];
-  contraindications: string[];
+  ingredients: string;
+  procedure: string;
+  application: string;
+  duration: string;
+  precautions?: string;
+  modificationIfAny?: string;
+  prescribedAgeGroup?: string;
   symptoms: string[];
+  price: number;
 }
 
 export default function PaymentAllPage() {
@@ -59,46 +61,51 @@ export default function PaymentAllPage() {
               .map((remedy) => [
                 new Paragraph({
                   children: [
-                    new TextRun({ text: remedy.name, bold: true, size: 28 }),
+                    new TextRun({
+                      text: remedy.ingredients,
+                      bold: true,
+                      size: 28,
+                    }),
                   ],
                   spacing: { after: 200 },
                 }),
                 new Paragraph({
                   children: [
-                    new TextRun({
-                      text: `Price: $${remedy.price.toFixed(2)}`,
-                      bold: true,
-                    }),
+                    new TextRun({ text: `Procedure: ${remedy.procedure}` }),
                   ],
                 }),
                 new Paragraph({
                   children: [
-                    new TextRun({ text: `Description: ${remedy.description}` }),
+                    new TextRun({ text: `Application: ${remedy.application}` }),
                   ],
                 }),
                 new Paragraph({
-                  children: [new TextRun({ text: `Dosage: ${remedy.dosage}` })],
-                }),
-                new Paragraph({
                   children: [
-                    new TextRun({
-                      text: `Symptoms: ${remedy.symptoms?.join(", ")}`,
-                    }),
+                    new TextRun({ text: `Duration: ${remedy.duration}` }),
                   ],
                 }),
                 new Paragraph({
                   children: [
                     new TextRun({
-                      text: `Side Effects: ${remedy.sideEffects?.join(", ")}`,
+                      text: `Precautions: ${remedy.precautions || "-"}`,
                     }),
                   ],
                 }),
                 new Paragraph({
                   children: [
                     new TextRun({
-                      text: `Contraindications: ${remedy.contraindications?.join(
-                        ", "
-                      )}`,
+                      text: `Modification if any: ${
+                        remedy.modificationIfAny || "-"
+                      }`,
+                    }),
+                  ],
+                }),
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: `Prescribed age group: ${
+                        remedy.prescribedAgeGroup || "-"
+                      }`,
                     }),
                   ],
                 }),
@@ -138,30 +145,45 @@ export default function PaymentAllPage() {
                 key={remedy._id}
                 className="bg-gray-800 p-4 rounded shadow border border-gray-700"
               >
-                <h2 className="text-xl font-bold mb-2">{remedy.name}</h2>
-                <p className="mb-2 text-primary-400 font-semibold">
-                  ${remedy.price.toFixed(2)}
-                </p>
-                <p className="mb-2 text-gray-300">{remedy.description}</p>
                 <div className="mb-2">
-                  <span className="font-semibold text-gray-200">Dosage:</span>{" "}
-                  {remedy.dosage}
-                </div>
-                <div className="mb-2">
-                  <span className="font-semibold text-gray-200">Symptoms:</span>{" "}
-                  {remedy.symptoms?.join(", ")}
+                  <span className="font-semibold text-gray-200">
+                    Ingredients:
+                  </span>{" "}
+                  {remedy.ingredients}
                 </div>
                 <div className="mb-2">
                   <span className="font-semibold text-gray-200">
-                    Side Effects:
+                    Procedure:
                   </span>{" "}
-                  {remedy.sideEffects?.join(", ")}
+                  {remedy.procedure}
                 </div>
-                <div>
+                <div className="mb-2">
                   <span className="font-semibold text-gray-200">
-                    Contraindications:
+                    Application:
                   </span>{" "}
-                  {remedy.contraindications?.join(", ")}
+                  {remedy.application}
+                </div>
+                <div className="mb-2">
+                  <span className="font-semibold text-gray-200">Duration:</span>{" "}
+                  {remedy.duration}
+                </div>
+                <div className="mb-2">
+                  <span className="font-semibold text-gray-200">
+                    Precautions:
+                  </span>{" "}
+                  {remedy.precautions || "-"}
+                </div>
+                <div className="mb-2">
+                  <span className="font-semibold text-gray-200">
+                    Modification if any:
+                  </span>{" "}
+                  {remedy.modificationIfAny || "-"}
+                </div>
+                <div className="mb-2">
+                  <span className="font-semibold text-gray-200">
+                    Prescribed age group:
+                  </span>{" "}
+                  {remedy.prescribedAgeGroup || "-"}
                 </div>
               </div>
             ))}

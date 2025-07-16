@@ -1,4 +1,4 @@
-// File: C:\Users\dhruv\OneDrive\Desktop\papa web2\app\products\page.tsx
+// File: C:\Users\dhruv\OneDrive\Desktop\papa web2\Papaweb\app\products\page.tsx
 import * as entry from '../../../../app/products/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

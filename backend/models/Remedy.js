@@ -1,34 +1,15 @@
 const mongoose = require("mongoose");
 
 const remedySchema = new mongoose.Schema({
-  name: { type: String, required: true, trim: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true, min: 0 },
+  ingredients: { type: String, required: true },
+  procedure: { type: String, required: true },
+  application: { type: String, required: true },
+  duration: { type: String, required: true },
+  precautions: { type: String },
+  modificationIfAny: { type: String },
+  prescribedAgeGroup: { type: String },
   symptoms: [{ type: String, required: true }],
-  category: {
-    type: String,
-    required: true,
-    enum: [
-      "pain-relief",
-      "fever",
-      "cough-cold",
-      "allergy",
-      "digestive",
-      "vitamins",
-      "herbal",
-      "other",
-    ],
-  },
-  dosage: { type: String, required: true },
-  sideEffects: [{ type: String }],
-  contraindications: [{ type: String }],
-  image: { type: String, default: "/remedy-placeholder.jpg" },
-  inStock: { type: Boolean, default: true },
-  rating: { type: Number, default: 4.5, min: 0, max: 5 },
-  reviewCount: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
+  price: { type: Number, required: true, min: 0 },
 });
-
-remedySchema.index({ name: "text", description: "text", symptoms: "text" });
 
 module.exports = mongoose.model("Remedy", remedySchema);
