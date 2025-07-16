@@ -355,7 +355,7 @@ export default function Remedies() {
                   remedies.forEach((remedy) => {
                     if (
                       selectedRemedies.includes(remedy._id) &&
-                      !cart.find((item) => item._id === remedy._id)
+                      !cart.find((item: Remedy) => item._id === remedy._id)
                     ) {
                       newCart.push({ ...remedy, type: "remedy" });
                       added++;
