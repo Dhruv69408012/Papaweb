@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost:5000/api";
+// const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://papaback2.onrender.com/api";
 
 // Generic API call function
 async function apiCall(endpoint, options = {}) {
