@@ -487,10 +487,8 @@ export default function Products() {
               )}
 
               <span className="px-4 py-2 text-gray-300">
-                {t("page_of", {
-                  current: pagination.currentPage,
-                  total: pagination.totalPages,
-                })}
+                {t("page_of")}: {pagination.currentPage} /{" "}
+                {pagination.totalPages}
               </span>
 
               {pagination.hasNextPage && (
