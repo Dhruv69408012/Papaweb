@@ -318,7 +318,7 @@ export default function Remedies() {
             {/* Results Count */}
             <div className="flex items-center justify-end">
               <span className="text-gray-300">
-                {pagination.totalRemedies} remedy
+                {pagination.totalRemedies} remed
                 {pagination.totalRemedies !== 1 ? "ies" : "y"} found
               </span>
             </div>
