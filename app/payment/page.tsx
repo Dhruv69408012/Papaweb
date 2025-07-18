@@ -1,9 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function DummyPaymentPage() {
   const router = useRouter();
+  const { t } = useLanguage();
 
   const handlePaid = () => {
     try {
@@ -24,7 +26,7 @@ export default function DummyPaymentPage() {
         onClick={handlePaid}
         className="px-8 py-4 bg-primary-600 text-white text-2xl rounded-lg shadow hover:bg-primary-700 transition-colors"
       >
-        Paid
+        {t("paid")}
       </button>
     </div>
   );

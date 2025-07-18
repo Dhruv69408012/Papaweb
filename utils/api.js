@@ -30,8 +30,12 @@ async function apiCall(endpoint, options = {}) {
 // Products API calls
 export const productsAPI = {
   getAll: (params = {}) => {
+    const language =
+      typeof window !== "undefined"
+        ? localStorage.getItem("language") || "english"
+        : "english";
     const searchParams = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
+    Object.entries({ ...params, language }).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== "") {
         searchParams.append(key, value);
       }
@@ -49,8 +53,12 @@ export const productsAPI = {
 // Remedies API calls
 export const remediesAPI = {
   getAll: (params = {}) => {
+    const language =
+      typeof window !== "undefined"
+        ? localStorage.getItem("language") || "english"
+        : "english";
     const searchParams = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
+    Object.entries({ ...params, language }).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== "") {
         searchParams.append(key, value);
       }

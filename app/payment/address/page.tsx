@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function AddressFormPage() {
   const [name, setName] = useState("");
@@ -9,6 +10,7 @@ export default function AddressFormPage() {
   const [email, setEmail] = useState("");
   const [hasProduct, setHasProduct] = useState(false);
   const router = useRouter();
+  const { t } = useLanguage();
 
   useEffect(() => {
     try {
@@ -44,16 +46,15 @@ export default function AddressFormPage() {
         className="bg-gray-800 p-8 rounded shadow-lg w-full max-w-md border border-gray-700"
       >
         <h1 className="text-2xl font-bold mb-6 text-primary-400 text-center">
-          Enter Address Details
+          {t("enter_address_details")}
         </h1>
         {hasProduct && (
           <div className="bg-yellow-100 text-yellow-900 rounded p-4 mb-6 text-center font-semibold">
-            You have selected one or more products. Please provide your address
-            and email to proceed.
+            {t("address_product_warning")}
           </div>
         )}
         <label className="block mb-4">
-          <span className="text-gray-200">Name</span>
+          <span className="text-gray-200">{t("name")}</span>
           <input
             type="text"
             value={name}
@@ -63,7 +64,7 @@ export default function AddressFormPage() {
           />
         </label>
         <label className="block mb-4">
-          <span className="text-gray-200">Address</span>
+          <span className="text-gray-200">{t("address")}</span>
           <textarea
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -72,7 +73,7 @@ export default function AddressFormPage() {
           />
         </label>
         <label className="block mb-6">
-          <span className="text-gray-200">Email</span>
+          <span className="text-gray-200">{t("email")}</span>
           <input
             type="email"
             value={email}
@@ -85,7 +86,7 @@ export default function AddressFormPage() {
           type="submit"
           className="w-full px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-semibold shadow"
         >
-          Submit
+          {t("submit")}
         </button>
       </form>
     </div>

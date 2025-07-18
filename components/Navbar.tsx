@@ -5,11 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ShoppingCart, Menu, X } from "lucide-react";
+import { useLanguage } from "./LanguageContext";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const pathname = usePathname();
+
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     function updateCartCount() {
@@ -26,11 +29,18 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { name: "Products", href: "/products" },
-    { name: "Remedies", href: "/remedies" },
+    { name: t("products"), href: "/products" },
+    { name: t("remedies"), href: "/remedies" },
   ];
 
   const isActive = (href: string) => pathname === href;
+
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(e.target.value as "en" | "te" | "hi");
+    if (pathname === "/products" || pathname === "/remedies") {
+      window.location.reload();
+    }
+  };
 
   return (
     <nav className="bg-gray-900 shadow-lg border-b border-gray-800">
@@ -67,6 +77,17 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
+            {/* Language Dropdown */}
+            <select
+              value={language}
+              onChange={handleLanguageChange}
+              className="ml-4 px-2 py-1 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              aria-label="Select language"
+            >
+              <option value="en">English</option>
+              <option value="te">Telugu</option>
+              <option value="hi">Hindi</option>
+            </select>
           </div>
 
           {/* Right side icons */}
@@ -115,6 +136,17 @@ export default function Navbar() {
                   {item.name}
                 </Link>
               ))}
+              {/* Language Dropdown for mobile */}
+              <select
+                value={language}
+                onChange={handleLanguageChange}
+                className="mt-2 w-full px-2 py-1 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                aria-label="Select language"
+              >
+                <option value="en">English</option>
+                <option value="te">Telugu</option>
+                <option value="hi">Hindi</option>
+              </select>
             </div>
           </div>
         )}

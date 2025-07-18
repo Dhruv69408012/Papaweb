@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 // @ts-ignore
 import { saveAs } from "file-saver";
 import { Document, Packer, Paragraph, TextRun } from "docx";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface Remedy {
   _id: string;
@@ -23,6 +24,7 @@ interface Remedy {
 export default function PaymentAllPage() {
   const [remedies, setRemedies] = useState<Remedy[]>([]);
   const router = useRouter();
+  const { t } = useLanguage();
 
   useEffect(() => {
     try {
@@ -51,7 +53,7 @@ export default function PaymentAllPage() {
             new Paragraph({
               children: [
                 new TextRun({
-                  text: "Your Remedies",
+                  text: t("your_remedies"),
                   bold: true,
                   size: 36,
                 }),
@@ -132,21 +134,22 @@ export default function PaymentAllPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8 flex flex-col items-center">
       <div className="w-full max-w-3xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">Your Remedies</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          {t("your_remedies")}
+        </h1>
         <div className="bg-yellow-100 text-yellow-900 rounded p-4 mb-6 text-center font-semibold">
-          You will not be able to view this data again if you move away from the
-          page.
+          {t("remedies_warning")}
         </div>
         <div className="flex justify-end mb-6">
           <button
             className="px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-semibold shadow"
             onClick={handleDownload}
           >
-            Download as Word
+            {t("download_as_word")}
           </button>
         </div>
         {remedies.length === 0 ? (
-          <p className="text-gray-400 text-center">No remedies found.</p>
+          <p className="text-gray-400 text-center">{t("no_remedies_found")}</p>
         ) : (
           <div className="space-y-6">
             {remedies.map((remedy) => (

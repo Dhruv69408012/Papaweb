@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { remediesAPI } from "@/utils/api";
 import "../globals.css";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface Remedy {
   _id: string;
@@ -33,6 +34,7 @@ interface Remedy {
 export default function Remedies() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useLanguage();
 
   const [remedies, setRemedies] = useState<Remedy[]>([]);
   const [symptoms, setSymptoms] = useState<string[]>([]);
@@ -220,10 +222,10 @@ export default function Remedies() {
       {/* Header */}
       <div className="bg-gray-800 shadow-sm border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Our Remedies</h1>
-          <p className="text-gray-300">
-            Find the right remedy for your symptoms
-          </p>
+          <h1 className="text-3xl font-bold text-white mb-2">
+            {t("our_remedies")}
+          </h1>
+          <p className="text-gray-300">{t("find_right_remedy")}</p>
         </div>
       </div>
 
@@ -236,7 +238,7 @@ export default function Remedies() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search remedies..."
+                placeholder={t("search_remedies")}
                 value={currentSearch}
                 onChange={(e) => updateURLParams({ search: e.target.value })}
                 className="w-full pl-10 pr-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-primary-500 focus:border-primary-500 placeholder-gray-400"
@@ -250,7 +252,7 @@ export default function Remedies() {
                 onChange={(e) => updateURLParams({ category: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-primary-500 focus:border-primary-500"
               >
-                <option value="all">All Categories</option>
+                <option value="all">{t("all_categories")}</option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
                     {formatCategoryName(category)}
@@ -270,7 +272,7 @@ export default function Remedies() {
                   ? selectedSymptoms
                       .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
                       .join(", ")
-                  : "All Symptoms"}
+                  : t("all_symptoms")}
                 <ChevronDown className="ml-2 h-4 w-4 text-gray-400" />
               </button>
               {showSymptomsDropdown && (
@@ -307,19 +309,18 @@ export default function Remedies() {
                 }}
                 className="w-full px-3 py-2 border border-gray-600 bg-gray-700 text-white rounded-md focus:ring-primary-500 focus:border-primary-500"
               >
-                <option value="name-asc">Name A-Z</option>
-                <option value="name-desc">Name Z-A</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="rating-desc">Highest Rated</option>
+                <option value="name-asc">{t("name_a_z")}</option>
+                <option value="name-desc">{t("name_z_a")}</option>
+                <option value="price-asc">{t("price_low_high")}</option>
+                <option value="price-desc">{t("price_high_low")}</option>
+                <option value="rating-desc">{t("highest_rated")}</option>
               </select>
             </div>
 
             {/* Results Count */}
             <div className="flex items-center justify-end">
               <span className="text-gray-300">
-                {pagination.totalRemedies} remed
-                {pagination.totalRemedies !== 1 ? "ies" : "y"} found
+                {pagination.totalRemedies} {t("remedies_found")}
               </span>
             </div>
           </div>
@@ -329,7 +330,7 @@ export default function Remedies() {
         {loading && (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-            <p className="text-gray-400 mt-4">Loading remedies...</p>
+            <p className="text-gray-400 mt-4">{t("loading_remedies")}</p>
           </div>
         )}
 
@@ -341,7 +342,7 @@ export default function Remedies() {
             onChange={handleSelectAll}
             className="form-checkbox h-5 w-5 text-primary-600 border-gray-600 bg-gray-800 rounded focus:ring-primary-500 mr-2"
           />
-          <span className="text-white">Select All</span>
+          <span className="text-white">{t("select_all")}</span>
         </div>
         {/* Add Selected to Cart Button */}
         {selectedRemedies.length > 0 && (
@@ -363,17 +364,15 @@ export default function Remedies() {
                   });
                   localStorage.setItem("cart", JSON.stringify(newCart));
                   window.dispatchEvent(new Event("storage"));
-                  alert(
-                    `${added} remed${added === 1 ? "y" : "ies"} added to cart!`
-                  );
+                  alert(`${added} ${t("remedy_added_to_cart")}`);
                   setSelectedRemedies([]);
                 } catch {
-                  alert("Error adding to cart.");
+                  alert(t("error_adding_to_cart"));
                 }
               }}
               className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-semibold shadow"
             >
-              Add Selected to Cart
+              {t("add_selected_to_cart")}
             </button>
           </div>
         )}
@@ -414,7 +413,7 @@ export default function Remedies() {
                   </p>
                   {/* Symptoms */}
                   <div className="mb-3">
-                    <p className="text-xs text-gray-400 mb-1">For:</p>
+                    <p className="text-xs text-gray-400 mb-1">{t("for")}:</p>
                     <div className="flex flex-wrap gap-1">
                       {remedy.symptoms.slice(0, 3).map((symptom, index) => (
                         <span
@@ -426,7 +425,7 @@ export default function Remedies() {
                       ))}
                       {remedy.symptoms.length > 3 && (
                         <span className="text-xs text-gray-500">
-                          +{remedy.symptoms.length - 3} more
+                          +{remedy.symptoms.length - 3} {t("more")}
                         </span>
                       )}
                     </div>
@@ -467,14 +466,12 @@ export default function Remedies() {
         {/* No Results */}
         {!loading && remedies.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">
-              No remedies found matching your criteria.
-            </p>
+            <p className="text-gray-400 text-lg">{t("no_remedies_found")}</p>
             <button
               onClick={() => router.push("/remedies")}
               className="mt-4 text-primary-400 hover:text-primary-300 font-medium"
             >
-              Clear filters
+              {t("clear_filters")}
             </button>
           </div>
         )}
@@ -490,12 +487,12 @@ export default function Remedies() {
                   }
                   className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
                 >
-                  Previous
+                  {t("previous")}
                 </button>
               )}
 
               <span className="px-4 py-2 text-gray-300">
-                Page {pagination.currentPage} of {pagination.totalPages}
+                {t("page")}: {pagination.currentPage} / {pagination.totalPages}
               </span>
 
               {pagination.hasNextPage && (
@@ -505,7 +502,7 @@ export default function Remedies() {
                   }
                   className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
                 >
-                  Next
+                  {t("next")}
                 </button>
               )}
             </div>
@@ -531,17 +528,15 @@ export default function Remedies() {
                   });
                   localStorage.setItem("cart", JSON.stringify(newCart));
                   window.dispatchEvent(new Event("storage"));
-                  alert(
-                    `${added} remed${added === 1 ? "y" : "ies"} added to cart!`
-                  );
+                  alert(`${added} ${t("remedy_added_to_cart")}`);
                   setSelectedRemedies([]);
                 } catch {
-                  alert("Error adding to cart.");
+                  alert(t("error_adding_to_cart"));
                 }
               }}
               className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-semibold shadow"
             >
-              Add Selected to Cart
+              {t("add_selected_to_cart")}
             </button>
           </div>
         )}
@@ -549,13 +544,13 @@ export default function Remedies() {
       {/* Button to Products Page */}
       <div className="flex flex-col items-center mt-12 mb-8">
         <p className="mb-3 text-gray-300 text-lg">
-          Looking for more options? Check out our Products.
+          {t("looking_for_more_options")}
         </p>
         <button
           onClick={() => router.push("/products")}
           className="px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-semibold shadow"
         >
-          Go to Products
+          {t("go_to_products")}
         </button>
       </div>
     </div>
