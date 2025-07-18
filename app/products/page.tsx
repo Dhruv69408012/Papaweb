@@ -524,9 +524,7 @@ export default function Products() {
                   });
                   localStorage.setItem("cart", JSON.stringify(newCart));
                   window.dispatchEvent(new Event("storage"));
-                  alert(
-                    `${added} ${t("product_added_to_cart", { count: added })}`
-                  );
+                  alert(`${added} ${t("product_added_to_cart")}`);
                   setSelectedProducts([]);
                 } catch {
                   alert(t("error_adding_to_cart"));
