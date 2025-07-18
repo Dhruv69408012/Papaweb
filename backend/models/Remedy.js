@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const remedySchema = new mongoose.Schema({
+  name: { type: String, required: true, trim: true },
   ingredients: { type: String, required: true },
   procedure: { type: String, required: true },
   application: { type: String, required: true },

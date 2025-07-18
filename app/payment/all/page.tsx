@@ -8,6 +8,7 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 
 interface Remedy {
   _id: string;
+  name: string;
   ingredients: string;
   procedure: string;
   application: string;
@@ -62,12 +63,20 @@ export default function PaymentAllPage() {
                 new Paragraph({
                   children: [
                     new TextRun({
-                      text: remedy.ingredients,
+                      text: remedy.name,
                       bold: true,
-                      size: 28,
+                      size: 32,
+                      color: "2E74B5",
                     }),
                   ],
                   spacing: { after: 200 },
+                }),
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: `Ingredients: ${remedy.ingredients}`,
+                    }),
+                  ],
                 }),
                 new Paragraph({
                   children: [
@@ -145,6 +154,11 @@ export default function PaymentAllPage() {
                 key={remedy._id}
                 className="bg-gray-800 p-4 rounded shadow border border-gray-700"
               >
+                <div className="mb-2">
+                  <span className="text-2xl font-bold text-primary-400 block mb-1">
+                    {remedy.name}
+                  </span>
+                </div>
                 <div className="mb-2">
                   <span className="font-semibold text-gray-200">
                     Ingredients:
