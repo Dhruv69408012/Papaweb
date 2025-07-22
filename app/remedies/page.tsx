@@ -34,7 +34,7 @@ interface Remedy {
 export default function Remedies() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const [remedies, setRemedies] = useState<Remedy[]>([]);
   const [symptoms, setSymptoms] = useState<string[]>([]);
@@ -112,9 +112,10 @@ export default function Remedies() {
   const loadFilterOptions = async () => {
     try {
       const [symptomsData, categoriesData] = await Promise.all([
-        remediesAPI.getSymptoms(),
+        remediesAPI.getSymptoms(language),
         remediesAPI.getCategories(),
       ]);
+      console.log(symptomsData);
       setSymptoms(symptomsData);
       setCategories(categoriesData);
     } catch (error) {

@@ -68,7 +68,17 @@ export const remediesAPI = {
 
   getById: (id) => apiCall(`/remedies/${id}`),
 
-  getSymptoms: () => apiCall("/remedies/symptoms/all"),
+  getSymptoms: (languageParam) => {
+    console.log(languageParam)
+    const language =
+      languageParam ||
+      (typeof window !== "undefined"
+        ? localStorage.getItem("language") || "en"
+        : "en");
+    const searchParams = new URLSearchParams();
+    if (language) searchParams.append("language", language);
+    return apiCall(`/remedies/symptoms/all?${searchParams.toString()}`);
+  },
 
   getCategories: () => apiCall("/remedies/categories/all"),
 };
