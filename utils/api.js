@@ -55,8 +55,8 @@ export const remediesAPI = {
   getAll: (params = {}) => {
     const language =
       typeof window !== "undefined"
-        ? localStorage.getItem("language") || "english"
-        : "english";
+        ? localStorage.getItem("language") || "en"
+        : "en";
     const searchParams = new URLSearchParams();
     Object.entries({ ...params, language }).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== "") {
